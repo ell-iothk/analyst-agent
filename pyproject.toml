@@ -1,8 +1,7 @@
-description = "Indonesian-language text-to-SQL agent for any SQL database via MCP"
 [project]
 name = "analyst"
 version = "0.1.0"
-description = "Add your description here"
+description = "Indonesian-language text-to-SQL agent for any SQL database via MCP"
 readme = "README.md"
 authors = [
     { name = "fadelkresna", email = "kresnadfadel@gmail.com" }
