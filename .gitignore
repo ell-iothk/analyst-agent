@@ -1,0 +1,17 @@
+# Python: file hasil kompilasi dan build
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Environment: virtualenv dan rahasia
+.venv/
+.env
+
+# Cache alat pengembangan
+.pytest_cache/
+.ruff_cache/
+
+# File sampah dari Windows saat menyalin file ke WSL
+*:Zone.Identifier
