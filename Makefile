@@ -6,7 +6,7 @@ help: ## Tampilkan daftar perintah
 
 setup: ## Pasang library dan pre-commit hook
 	uv sync
-	uv run pre-commit installs
+	uv run pre-commit install
 
 lint: ## Cek gaya kode tanpa mengubah apa pun
 	uv run ruff check .
