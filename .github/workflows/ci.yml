@@ -10,15 +10,15 @@ jobs:
     name: Lint and test
     runs-on: ubuntu-latest
     steps:
-      - name: Ambil kode
+      - name: Check out code
         uses: actions/checkout@v5
 
-      - name: Pasang uv
+      - name: Install uv
         uses: astral-sh/setup-uv@v8.1.0
         with:
           enable-cache: true
 
-      - name: Pasang dependensi persis sesuai uv.lock
+      - name: Install locked dependencies
         run: uv sync --locked
 
       - name: Lint

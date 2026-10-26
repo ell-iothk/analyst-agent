@@ -1,7 +1,7 @@
 from analyst import main
 
 
-def test_main_mencetak_salam(capsys):
+def test_main_prints_greeting(capsys):
     main()
-    keluaran = capsys.readouterr().out
-    assert "Hello from analyst!" in keluaran
+    output = capsys.readouterr().out
+    assert "Hello from analyst!" in output

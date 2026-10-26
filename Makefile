@@ -1,22 +1,22 @@
 .DEFAULT_GOAL := help
 .PHONY: help setup lint format test check
 
-help: ## Tampilkan daftar perintah
+help: ## Show available commands
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-8s\033[0m %s\n", $$1, $$2}'
 
-setup: ## Pasang library dan pre-commit hook
+setup: ## Install dependencies and pre-commit hooks
 	uv sync
 	uv run pre-commit install
 
-lint: ## Cek gaya kode tanpa mengubah apa pun
+lint: ## Check code style without changing files
 	uv run ruff check .
 	uv run ruff format --check .
 
-format: ## Rapikan kode otomatis
+format: ## Auto-format code
 	uv run ruff check --fix .
 	uv run ruff format .
 
-test: ## Jalankan semua test
+test: ## Run all tests
 	uv run pytest
 
-check: lint test ## Lint lalu test (jalankan sebelum commit)
+check: lint test ## Lint then test (run before committing)
