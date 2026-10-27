@@ -28,8 +28,9 @@ ps: ## Show database container status
 reset-db: ## Stop the databases AND delete their data
 	docker compose down -v
 
-load: ## Load Olist data into Postgres and MariaDB (run make up first)
+load: ## Load Olist data and create the read-only account (run make up first)
 	uv run python -m analyst.data.load_olist
+	uv run python -m analyst.data.readonly_user
 
 lint: ## Check code style without changing files
 	uv run ruff check .
