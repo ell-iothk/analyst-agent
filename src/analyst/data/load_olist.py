@@ -6,14 +6,12 @@ write access. The agent itself will use a separate read-only account.
 
 import csv
 import gzip
-import os
 import sys
 from collections.abc import Iterator
 from datetime import datetime
 from decimal import Decimal
 from pathlib import Path
 
-from dotenv import load_dotenv
 from sqlalchemy import (
     URL,
     DateTime,
@@ -26,6 +24,7 @@ from sqlalchemy import (
     select,
 )
 
+from analyst.data.connections import admin_urls
 from analyst.data.olist_schema import metadata
 
 RAW_DIR = Path("data/raw/olist")
@@ -91,28 +90,6 @@ def load_table(engine: Engine, table: Table, path: Path) -> int:
         return conn.execute(select(func.count()).select_from(table)).scalar_one()
 
 
-def database_urls() -> dict[str, URL]:
-    """Admin connection URLs for both engines, built from .env."""
-    load_dotenv()
-    common = {
-        "username": os.environ["DB_ADMIN_USER"],
-        "password": os.environ["DB_ADMIN_PASSWORD"],
-        "host": "localhost",
-        "database": os.environ["DB_NAME"],
-    }
-    return {
-        "postgres": URL.create(
-            "postgresql+psycopg", port=int(os.environ["POSTGRES_PORT"]), **common
-        ),
-        "mariadb": URL.create(
-            "mysql+pymysql",
-            port=int(os.environ["MARIADB_PORT"]),
-            query={"charset": "utf8mb4"},
-            **common,
-        ),
-    }
-
-
 def load_into(engine_name: str, url: URL) -> None:
     engine = create_engine(url)
     print(f"\n== {engine_name}")
@@ -130,7 +107,7 @@ def load_into(engine_name: str, url: URL) -> None:
 
 
 def main() -> None:
-    for engine_name, url in database_urls().items():
+    for engine_name, url in admin_urls().items():
         load_into(engine_name, url)
     print("\nDone. Both databases hold identical Olist data.")
 
